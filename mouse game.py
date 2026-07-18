@@ -36,6 +36,10 @@ DARK_BLUE = (0, 0, 200)
 YELLOW = (255, 190, 20)
 ORANGE = (255, 100, 0)
 
+MENU = "menu"
+PLAYING = "playing"
+PAUSED = "paused"
+GAME_OVER = "game_over"
 
 def quit_game():
     pygame.quit()
@@ -73,7 +77,7 @@ class Game:
         self.player = Player()
         self.food = Food()        
 
-        self.state = "playing"     # state = ["menu", "playing", "paused", "game_over"]
+        self.state = PLAYING     # state = ["menu", "playing", "paused", "game_over"]
 
         self.screen = screen
 
@@ -81,17 +85,17 @@ class Game:
         self.fps = 30
 
     def run(self):
-        while self.state != "menu":
+        while self.state != MENU:
 
             self.process_events()
 
-            if self.state == "game_over":
+            if self.state == GAME_OVER:
                 self.draw_game_over()
 
-            elif self.state == "paused":
+            elif self.state == PAUSED:
                 self.draw_pause_menu()
 
-            elif self.state == "playing":
+            elif self.state == PLAYING:
                 self.update()
                 self.draw()
 
@@ -106,17 +110,17 @@ class Game:
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    if self.state == "paused":
-                        self.state = "playing"
-                    elif self.state == "playing":
-                        self.state = "paused"
+                    if self.state == PAUSED:
+                        self.state = PLAYING
+                    elif self.state == PLAYING:
+                        self.state = PAUSED
 
     def update(self):
         self.player.update()
         self.player.eat(self.food)
 
         if self.player.size <= 10:
-            self.state = "game_over"
+            self.state = GAME_OVER
 
     def draw(self):
         self.screen.fill(BLACK)
@@ -143,10 +147,10 @@ class Game:
         draw_text("Note: The game starts immediately after you pressed resume.", small_font, RED, SCREEN_WIDTH//2, 250)
 
         if draw_button("Resume", SCREEN_WIDTH//2-150, 300, 120, 50, GREEN, DARK_GREEN):
-            self.state = "playing"
+            self.state = PLAYING
 
         if draw_button("Main Menu", SCREEN_WIDTH//2+30, 300, 120, 50, BLUE, DARK_BLUE):
-            self.state = "menu"
+            self.state = MENU
 
         draw_text("Press ESC to Resume", small_font, GRAY, SCREEN_WIDTH//2, 390)
 
@@ -159,7 +163,7 @@ class Game:
         if draw_button("Play Again", SCREEN_WIDTH/2-130, SCREEN_HEIGHT/2, 120, 50, GREEN, DARK_GREEN):
             self.reset()
         if draw_button("Menu", SCREEN_WIDTH/2+10, SCREEN_HEIGHT/2, 120, 50, BLUE, DARK_BLUE):
-            self.state = "menu"
+            self.state = MENU
                          
     def reset(self):
         self.player = Player()
@@ -220,8 +224,6 @@ class Food:
 
 
 
-
-
 def menu():
     while True:
         screen.fill(BLACK)
@@ -230,11 +232,10 @@ def menu():
         draw_text(" Mouse Game ", title_font, GREEN, SCREEN_WIDTH/2, 160)
         
         # buttons
-        if draw_button("start", SCREEN_WIDTH/2 -150, SCREEN_HEIGHT/2 -60, 100, 50, GREEN, DARK_GREEN):
-            return 'game'
+        if draw_button("Start", SCREEN_WIDTH/2 -150, SCREEN_HEIGHT/2 -60, 100, 50, GREEN, DARK_GREEN):
+            return "start"
         if draw_button("Exit", SCREEN_WIDTH/2 +50, SCREEN_HEIGHT/2 -60, 100, 50, ORANGE, YELLOW):
-            quit_game()
-        
+            return "exit"
         
         # guide
         draw_text("Move your mouse and try to eat food as much as you can.", small_font, GRAY, SCREEN_WIDTH/2, 350)
@@ -249,11 +250,13 @@ def menu():
 
 def main():
     while True:
-        menu()
+        action = menu()
 
-        game = Game()
-        game.run()
+        if action == "start":
+            Game().run()
 
+        elif action == "exit":
+            quit_game()
 
 if __name__ == "__main__":
     main()
