@@ -12,6 +12,10 @@ import random
 
 
 pygame.init()
+
+icon = pygame.Surface((32, 32), pygame.SRCALPHA)  # Transparent icon
+pygame.display.set_icon(icon)
+
 pygame.display.set_caption("Make Bigger")
 
 SCREEN_WIDTH = 800
@@ -182,11 +186,14 @@ class Player:
         self.score = 0
         
     def update(self):
+        half = self.size // 2
+
         mouse_x, mouse_y = pygame.mouse.get_pos()
 
-        self.loc_x = mouse_x
-        self.loc_y = mouse_y
+        self.loc_x = max(half, min(mouse_x, SCREEN_WIDTH - half))
+        self.loc_y = max(40 + half, min(mouse_y, SCREEN_HEIGHT - half))
         
+        #set max and min size for object
         self.size -= 0.5
         self.size = max(10, min(self.size, 100))
 
