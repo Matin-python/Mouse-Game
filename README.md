@@ -2,7 +2,6 @@
 
 A simple arcade game built with **Python** and **Pygame** where the player controls a shrinking square using the mouse. Collect food before your size reaches the minimum limit to survive and achieve the highest score possible.
 
----
 
 ## 🎮 Gameplay
 
@@ -13,7 +12,6 @@ The player follows the mouse cursor around the screen.
 - If your size becomes too small, the game ends.
 - Pause the game at any time using the **ESC** key.
 
----
 
 ## ✨ Features
 
@@ -28,14 +26,12 @@ The player follows the mouse cursor around the screen.
 - 🎨 Simple and clean user interface
 - 🧩 Object-Oriented Programming (OOP) design
 
----
 
 ## 🛠️ Technologies Used
 
 - Python 3
 - Pygame
 
----
 
 ## 📂 Project Structure
 
@@ -48,11 +44,11 @@ Mouse-Game/
 │   ├── gameplay.png
 │   ├── pausemenu.png
 │   └── gameover.png
+├── LICENSE
 ├── requirements.txt
 └── README.md
 ```
 
----
 
 ## 🚀 Installation
 
@@ -80,7 +76,6 @@ or
 pip install -r requirements.txt
 ```
 
----
 
 ## ▶️ How to Run
 
@@ -88,7 +83,6 @@ pip install -r requirements.txt
 python mouse game.py
 ```
 
----
 
 ## 🎮 Controls
 
@@ -98,14 +92,13 @@ python mouse game.py
 | Pause / Resume | ESC |
 | Menu Navigation | Mouse |
 
----
+
 
 ## 📷 Screenshots
 
 ### Main Menu
 
 ![Main Menu](screenshots/menu.png)
-
 
 ### Gameplay
 
@@ -131,7 +124,6 @@ python mouse game.py
 4. Your size continuously decreases over time.
 5. The game ends when your size reaches the minimum limit.
 
----
 
 ## 💡 Future Improvements
 
@@ -146,7 +138,6 @@ python mouse game.py
 - ⚙️ Settings menu
 - 🎮 Controller support
 
----
 
 ## 📦 Create an Executable (.exe)
 
@@ -170,19 +161,16 @@ pyinstaller --onefile --windowed main.py
 
 The executable will be generated inside the `dist` folder.
 
----
 
 ## 🤝 Contributing
 
 Contributions, suggestions, and bug reports are welcome. Feel free to fork the repository and submit a pull request.
 
----
 
 ## 📄 License
 
 This project is licensed under the MIT License.
 
----
 
 ## 👨‍💻 Author
 
@@ -190,12 +178,4 @@ This project is licensed under the MIT License.
 
 Electrical Engineering (Electronics) Graduate
 
-Interested in:
-
-- Python Development
-- Game Development
-- Computer Vision
-- Machine Learning
-- Deep Learning
-- Artificial Intelligence
--
+Interested in Python Development, Computer Vision, Machine Learning, and Artificial Intelligence.
