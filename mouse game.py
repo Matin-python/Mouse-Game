@@ -86,6 +86,7 @@ class Game:
         self.state = PLAYING     # state = ["menu", "playing", "paused", "game_over", "win"]
 
         self.max_size_timer = None
+        self.win_delay = 3000   # milliseconds (3 seconds)
 
         self.screen = screen
 
@@ -103,7 +104,7 @@ class Game:
             elif self.state == PAUSED:
                 self.draw_pause_menu()
             
-            elif self.state == "win":
+            elif self.state == WIN:
                 self.draw_win_screen()
 
             elif self.state == PLAYING:
@@ -130,11 +131,11 @@ class Game:
         self.player.update()
         self.player.eat(self.food)
 
-        if self.player.size >= 90:
+        if self.player.size >= 94:
             if self.max_size_timer is None:
                 self.max_size_timer = pygame.time.get_ticks()
 
-            elif pygame.time.get_ticks() - self.max_size_timer >= 3000:
+            elif pygame.time.get_ticks() - self.max_size_timer >= self.win_delay:
                 self.state = "win"
 
         else:
@@ -154,6 +155,15 @@ class Game:
 
     def draw_ui(self):
         draw_text("Score= " + str(self.player.score), font, RED, 70, 20)
+
+        # Countdown
+        if self.max_size_timer is not None:
+
+            elapsed = pygame.time.get_ticks() - self.max_size_timer
+            remaining = max(0, (self.win_delay - elapsed) / 1000)
+
+            draw_text( f"Victory in: {remaining:.1f}s", font, YELLOW, SCREEN_WIDTH // 2, 20)
+
         # draw_text("Difficulty= " + str(difficulty), font, RED, SCREEN_WIDTH-100, 20)
         pygame.draw.line(self.screen, RED, (0,40), (SCREEN_WIDTH,40), 5)
         pygame.draw.line(self.screen, RED, (0,40), (0, SCREEN_HEIGHT), 5)
