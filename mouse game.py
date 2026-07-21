@@ -43,7 +43,9 @@ ORANGE = (255, 100, 0)
 MENU = "menu"
 PLAYING = "playing"
 PAUSED = "paused"
+WIN = "win"
 GAME_OVER = "game_over"
+
 
 def quit_game():
     pygame.quit()
@@ -81,7 +83,9 @@ class Game:
         self.player = Player()
         self.food = Food()        
 
-        self.state = PLAYING     # state = ["menu", "playing", "paused", "game_over"]
+        self.state = PLAYING     # state = ["menu", "playing", "paused", "game_over", "win"]
+
+        self.max_size_timer = None
 
         self.screen = screen
 
@@ -98,6 +102,9 @@ class Game:
 
             elif self.state == PAUSED:
                 self.draw_pause_menu()
+            
+            elif self.state == "win":
+                self.draw_win_screen()
 
             elif self.state == PLAYING:
                 self.update()
@@ -122,6 +129,16 @@ class Game:
     def update(self):
         self.player.update()
         self.player.eat(self.food)
+
+        if self.player.size >= 90:
+            if self.max_size_timer is None:
+                self.max_size_timer = pygame.time.get_ticks()
+
+            elif pygame.time.get_ticks() - self.max_size_timer >= 3000:
+                self.state = "win"
+
+        else:
+            self.max_size_timer = None
 
         if self.player.size <= 10:
             self.state = GAME_OVER
@@ -158,6 +175,15 @@ class Game:
 
         draw_text("Press ESC to Resume", small_font, GRAY, SCREEN_WIDTH//2, 390)
 
+    def draw_win_screen(self):
+        self.screen.fill(BLACK)
+        draw_text("You Won!", title_font, RED, SCREEN_WIDTH/2, SCREEN_HEIGHT/2-70)
+        draw_text(f"Final Score: {self.player.score}", font, WHITE, SCREEN_WIDTH/2, SCREEN_HEIGHT/2 -30)
+
+        if draw_button("Play Again", SCREEN_WIDTH/2-130, SCREEN_HEIGHT/2, 120, 50, GREEN, DARK_GREEN):
+            self.reset()
+        if draw_button("Menu", SCREEN_WIDTH/2+10, SCREEN_HEIGHT/2, 120, 50, BLUE, DARK_BLUE):
+            self.state = MENU
 
     def draw_game_over(self):
         self.screen.fill(BLACK)
