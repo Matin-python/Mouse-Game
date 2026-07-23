@@ -46,7 +46,7 @@ Control the green square with your mouse and collect the blue food before you be
 ```text
 Make-Bigger/
 │
-├── make_bigger.py
+├── make bigger.py
 ├── screenshots/
 │   ├── menu.png
 │   ├── gameplay.png
@@ -89,7 +89,7 @@ pip install -r requirements.txt
 ## How to Run
 
 ```bash
-python make_bigger.py
+python make bigger.py
 ```
 
 
